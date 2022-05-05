@@ -123,8 +123,8 @@ export function updateReviewField({ name, value }) {
   };
 }
 
-export function postReview() {
-  return {
+export function sendReview() {
+  return async (dispatch, getState) => {
 
   };
 }
