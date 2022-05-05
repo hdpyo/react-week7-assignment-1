@@ -122,3 +122,9 @@ export function updateReviewField({ name, value }) {
     payload: { name, value },
   };
 }
+
+export function postReview() {
+  return {
+
+  };
+}
