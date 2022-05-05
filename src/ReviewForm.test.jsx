@@ -40,15 +40,20 @@ describe('ReviewForm', () => {
     });
   });
 
-  it('renders "Send" button ', () => {
+  it('renders "Send" button and button listens click event', () => {
     const handleChange = jest.fn();
+    const handleSubmit = jest.fn();
 
     const { queryByText } = render((
       <ReviewForm
         onChange={handleChange}
+        onSubmit={handleSubmit}
       />
     ));
 
     expect(queryByText('Send')).not.toBeNull();
+
+    fireEvent.click(queryByText('Send'));
+    expect(handleSubmit).toBeCalled();
   });
 });
