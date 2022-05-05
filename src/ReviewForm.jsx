@@ -14,6 +14,7 @@ export default function ReviewForm({ onChange }) {
         name="description"
         onChange={onChange}
       />
+      <button type="button">Send</button>
     </>
   );
 }
