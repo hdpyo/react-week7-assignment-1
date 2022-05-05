@@ -60,6 +60,16 @@ describe('RestaurantContainer', () => {
         });
       });
     });
+
+    it('renders "Send" button and listens event ', () => {
+      const { getByText } = renderRestaurantContainer();
+
+      fireEvent.click(getByText('Send'));
+
+      // - 최초 RestaurantContainer 렌더링 시 useEffect 로 dispatch 가 한 번 실행된다.
+      // - 따라서 "Send" 를 누르면 dispatch 가 총 2번 호출되는 것과 같다.
+      expect(dispatch).toBeCalledTimes(2);
+    });
   });
 
   context('without restaurant', () => {
