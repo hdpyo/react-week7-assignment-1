@@ -1,6 +1,6 @@
 import TextField from './TextField';
 
-export default function ReviewForm({ onChange }) {
+export default function ReviewForm({ onChange, onSubmit }) {
   return (
     <>
       <TextField
@@ -14,7 +14,12 @@ export default function ReviewForm({ onChange }) {
         name="description"
         onChange={onChange}
       />
-      <button type="button">Send</button>
+      <button
+        type="button"
+        onClick={onSubmit}
+      >
+        Send
+      </button>
     </>
   );
 }
