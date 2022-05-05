@@ -3,14 +3,25 @@ import { fireEvent, render } from '@testing-library/react';
 import ReviewForm from './ReviewForm';
 
 describe('ReviewForm', () => {
-  it('renders review write fields ', () => {
-    const handleChange = jest.fn();
+  const handleChange = jest.fn();
+  const handleSubmit = jest.fn();
 
-    const { container, queryByLabelText } = render((
+  function renderReviewForm() {
+    return render((
       <ReviewForm
         onChange={handleChange}
+        onSubmit={handleSubmit}
       />
     ));
+  }
+
+  beforeEach(() => {
+    handleChange.mockClear();
+    handleSubmit.mockClear();
+  });
+
+  it('renders review write fields ', () => {
+    const { container, queryByLabelText } = renderReviewForm();
 
     expect(container).toHaveTextContent('평점');
     expect(container).toHaveTextContent('리뷰 내용');
@@ -20,13 +31,7 @@ describe('ReviewForm', () => {
   });
 
   it('listens input change event', () => {
-    const handleChange = jest.fn();
-
-    const { getByLabelText } = render((
-      <ReviewForm
-        onChange={handleChange}
-      />
-    ));
+    const { getByLabelText } = renderReviewForm();
 
     const controls = [
       { label: '평점', name: 'score', value: '5' },
@@ -41,15 +46,7 @@ describe('ReviewForm', () => {
   });
 
   it('renders "Send" button and button listens click event', () => {
-    const handleChange = jest.fn();
-    const handleSubmit = jest.fn();
-
-    const { queryByText } = render((
-      <ReviewForm
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-      />
-    ));
+    const { queryByText } = renderReviewForm();
 
     expect(queryByText('Send')).not.toBeNull();
 
