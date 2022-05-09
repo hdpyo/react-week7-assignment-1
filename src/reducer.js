@@ -1,4 +1,5 @@
 import { equal } from './utils';
+import restaurant from '../fixtures/restaurant';
 
 const initialState = {
   regions: [],
@@ -94,6 +95,16 @@ const reducers = {
       reviewFields: {
         ...state.reviewFields,
         [name]: value,
+      },
+    };
+  },
+
+  setReviews(state, { payload: { reviews } }) {
+    return {
+      ...state,
+      restaurant: {
+        ...state.restaurant,
+        reviews,
       },
     };
   },

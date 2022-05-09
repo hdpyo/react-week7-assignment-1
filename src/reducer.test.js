@@ -9,7 +9,7 @@ import {
   selectCategory,
   updateLoginField,
   setAccessToken,
-  updateReviewField, logout,
+  updateReviewField, logout, setReviews,
 } from './actions';
 
 describe('reducer', () => {
@@ -225,6 +225,26 @@ describe('reducer', () => {
       );
 
       expect(state.reviewFields.description).toBe('맛있어요');
+    });
+  });
+
+  describe('setReviews', () => {
+    it('changes reviews of the current restaurant ', () => {
+      const initialState = {
+        restaurant: {
+          reviews: [],
+        },
+      };
+
+      const reviews = [
+        {
+          id: 1, name: '테스터', score: '1', description: '맛있어요',
+        },
+      ];
+
+      const state = reducer(initialState, setReviews(reviews));
+
+      expect(state.restaurant.reviews).toHaveLength(reviews.length);
     });
   });
 });
