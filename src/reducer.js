@@ -99,6 +99,16 @@ const reducers = {
     };
   },
 
+  clearReviewFields(state) {
+    return {
+      ...state,
+      reviewFields: {
+        score: '',
+        description: '',
+      },
+    };
+  },
+
   setReviews(state, { payload: { reviews } }) {
     return {
       ...state,
