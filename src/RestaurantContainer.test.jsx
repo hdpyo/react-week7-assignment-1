@@ -21,6 +21,11 @@ describe('RestaurantContainer', () => {
         score: '',
         description: '',
       },
+      reviews: [
+        {
+          id: 1, name: '테스터', score: '1', description: '맛있어요',
+        },
+      ],
       accessToken: given.accessToken,
     }));
   });
@@ -47,6 +52,12 @@ describe('RestaurantContainer', () => {
 
         expect(container).toHaveTextContent('마법사주방');
         expect(container).toHaveTextContent('서울시');
+      });
+
+      it('renders reviews ', () => {
+        const { container } = renderRestaurantContainer();
+
+        expect(container).toHaveTextContent('맛있어요');
       });
 
       it('listens change events', () => {
