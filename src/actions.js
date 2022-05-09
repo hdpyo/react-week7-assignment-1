@@ -129,6 +129,12 @@ export function updateReviewField({ name, value }) {
   };
 }
 
+export function clearReviewFields() {
+  return {
+    type: 'clearReviewFields',
+  };
+}
+
 export function setReviews(reviews) {
   return {
     type: 'setReviews',
