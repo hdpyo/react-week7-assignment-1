@@ -138,3 +138,9 @@ export function sendReview({ restaurantId }) {
     });
   };
 }
+
+export function logout() {
+  return {
+    type: 'logout',
+  };
+}

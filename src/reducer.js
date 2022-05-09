@@ -81,6 +81,13 @@ const reducers = {
     };
   },
 
+  logout(state) {
+    return {
+      ...state,
+      accessToken: '',
+    };
+  },
+
   updateReviewField(state, { payload: { name, value } }) {
     return {
       ...state,

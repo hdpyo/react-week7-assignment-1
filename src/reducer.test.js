@@ -9,7 +9,7 @@ import {
   selectCategory,
   updateLoginField,
   setAccessToken,
-  updateReviewField,
+  updateReviewField, logout,
 } from './actions';
 
 describe('reducer', () => {
@@ -182,6 +182,16 @@ describe('reducer', () => {
     const state = reducer(initialState, setAccessToken('token'));
 
     expect(state.accessToken).toBe('token');
+  });
+
+  describe('logout', () => {
+    const initialState = {
+      accessToken: 'ACCESS_TOKEN',
+    };
+
+    const state = reducer(initialState, logout());
+
+    expect(state.accessToken).toBe('');
   });
 
   describe('updateReviewField', () => {
