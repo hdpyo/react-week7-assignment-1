@@ -3,9 +3,11 @@ export default function Reviews({ reviews }) {
     return null;
   }
 
+  const sortedReviews = [...reviews].sort((a, b) => b.id - a.id);
+
   return (
     <ul>
-      {reviews.map((review) => (
+      {sortedReviews.map((review) => (
         <li key={review.id}>
           <div>
             작성자 :
