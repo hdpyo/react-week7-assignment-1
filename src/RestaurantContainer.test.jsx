@@ -21,11 +21,6 @@ describe('RestaurantContainer', () => {
         score: '',
         description: '',
       },
-      reviews: [
-        {
-          id: 1, name: '테스터', score: '1', description: '맛있어요',
-        },
-      ],
       accessToken: given.accessToken,
     }));
   });
@@ -45,6 +40,11 @@ describe('RestaurantContainer', () => {
         id: 1,
         name: '마법사주방',
         address: '서울시 강남구',
+        reviews: [
+          {
+            id: 1, name: '테스터', score: '1', description: '맛있어요',
+          },
+        ],
       }));
 
       it('renders name and address', () => {
