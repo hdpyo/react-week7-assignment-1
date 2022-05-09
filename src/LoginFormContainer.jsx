@@ -8,6 +8,7 @@ import {
 } from './actions';
 
 import LoginForm from './LoginForm';
+import LogoutForm from './LogoutForm';
 
 export default function LoginFormContainer() {
   const dispatch = useDispatch();
@@ -22,14 +23,6 @@ export default function LoginFormContainer() {
   function handleChange({ name, value }) {
     // TODO: 이메일, 비밀번호 상태를 변경하는 액션
     dispatch(updateLoginField({ name, value }));
-  }
-
-  function LogoutForm({ onClick }) {
-    return (
-      <button type="button" onClick={onClick}>
-        Logout
-      </button>
-    );
   }
 
   function handleClickLogout() {
