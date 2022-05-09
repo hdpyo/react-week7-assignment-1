@@ -55,8 +55,7 @@ describe('LoginFormContainer', () => {
       fireEvent.click(getByText('Log out'));
 
       expect(dispatch).toBeCalledWith({
-        type: 'setAccessToken',
-        payload: { accessToken: '' },
+        type: 'logout',
       });
     });
   });
