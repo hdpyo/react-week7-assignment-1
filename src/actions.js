@@ -136,6 +136,9 @@ export function sendReview({ restaurantId }) {
     await postReview({
       accessToken, restaurantId, score, description,
     });
+
+    // TODO : 리뷰 작성 후 레뷰 다시 불러오기
+    dispatch(loadRestaurant({ restaurantId }));
   };
 }
 

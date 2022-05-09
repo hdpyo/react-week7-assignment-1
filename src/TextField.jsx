@@ -18,7 +18,6 @@ export default function TextField({
         name={name}
         id={id}
         placeholder={`${label}을 입력해주세요.`}
-        value=""
         onChange={handleChange}
       />
     </div>
