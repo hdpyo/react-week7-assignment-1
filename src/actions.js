@@ -154,6 +154,9 @@ export function sendReview({ restaurantId }) {
 
     // TODO : 리뷰 작성 후 레뷰 다시 불러오기
     dispatch(loadReview({ restaurantId }));
+
+    dispatch(updateReviewField({ name: 'score', value: '' }));
+    dispatch(updateReviewField({ name: 'description', value: '' }));
   };
 }
 

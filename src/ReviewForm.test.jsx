@@ -6,9 +6,10 @@ describe('ReviewForm', () => {
   const handleChange = jest.fn();
   const handleSubmit = jest.fn();
 
-  function renderReviewForm() {
+  function renderReviewForm({ score, description } = {}) {
     return render((
       <ReviewForm
+        fields={{ score, description }}
         onChange={handleChange}
         onSubmit={handleSubmit}
       />
@@ -21,6 +22,16 @@ describe('ReviewForm', () => {
   });
 
   it('renders review write fields ', () => {
+    const { queryByLabelText } = renderReviewForm({
+      score: '3',
+      description: '맛있어요',
+    });
+
+    expect(queryByLabelText('평점').value).toBe('3');
+    expect(queryByLabelText('리뷰 내용').value).toBe('맛있어요');
+  });
+
+  it('renders values of fields ', () => {
     const { container, queryByLabelText } = renderReviewForm();
 
     expect(container).toHaveTextContent('평점');
