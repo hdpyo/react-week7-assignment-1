@@ -19,6 +19,7 @@ describe('LoginFormContainer', () => {
         email: 'test@test',
         password: '1234',
       },
+      accessToken: given.accessToken,
     }));
   });
 
@@ -26,18 +27,32 @@ describe('LoginFormContainer', () => {
     <LoginFormContainer />,
   );
 
-  it('renders input controls', () => {
-    const { getByLabelText } = renderLoginFormContainer();
+  context('when logged out', () => {
+    given('accessToken', () => '');
 
-    expect(getByLabelText('email').value).toBe('test@test');
-    expect(getByLabelText('password').value).toBe('1234');
+    it('renders input controls', () => {
+      const { getByLabelText } = renderLoginFormContainer();
+
+      expect(getByLabelText('email').value).toBe('test@test');
+      expect(getByLabelText('password').value).toBe('1234');
+    });
+
+    it('renders login button', () => {
+      const { getByText } = renderLoginFormContainer();
+
+      fireEvent.click(getByText('Log In'));
+
+      expect(dispatch).toBeCalled();
+    });
   });
 
-  it('renders login button', () => {
-    const { getByText } = renderLoginFormContainer();
+  context('when logged in', () => {
+    given('accessToken', () => 'ACCESS_TOKEN');
 
-    fireEvent.click(getByText('Log In'));
+    it('renders "Log out" button', () => {
+      const { container } = renderLoginFormContainer();
 
-    expect(dispatch).toBeCalled();
+      expect(container).toHaveTextContent('Log out');
+    });
   });
 });

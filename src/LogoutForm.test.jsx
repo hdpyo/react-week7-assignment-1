@@ -1,11 +1,15 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import LogoutForm from './LogoutForm';
 
 describe('LogoutForm', () => {
-  it('render <LogoutForm /> ', () => {
-    const { container } = render(<LogoutForm />);
+  it('render "Log out" button and listens event ', () => {
+    const handleClickLogout = jest.fn();
 
-    expect(container).toHaveTextContent('Log out');
+    const { getByText } = render(<LogoutForm onClick={handleClickLogout} />);
+
+    fireEvent.click(getByText('Log out'));
+
+    expect(handleClickLogout).toBeCalled();
   });
 });
