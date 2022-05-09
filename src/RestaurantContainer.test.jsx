@@ -17,6 +17,11 @@ describe('RestaurantContainer', () => {
 
     useSelector.mockImplementation((selector) => selector({
       restaurant: given.restaurant,
+      reviewFields: {
+        score: '',
+        description: '',
+      },
+      accessToken: given.accessToken,
     }));
   });
 
@@ -26,59 +31,73 @@ describe('RestaurantContainer', () => {
     expect(dispatch).toBeCalled();
   });
 
-  context('with restaurant', () => {
-    given('restaurant', () => ({
-      id: 1,
-      name: '마법사주방',
-      address: '서울시 강남구',
-    }));
+  context('with logged-in', () => {
+    given('accessToken', () => 'ACCESS_TOKEN');
+    // TODO : accessToken 세팅
 
-    it('renders name and address', () => {
-      const { container } = renderRestaurantContainer();
+    context('with restaurant', () => {
+      given('restaurant', () => ({
+        id: 1,
+        name: '마법사주방',
+        address: '서울시 강남구',
+      }));
 
-      expect(container).toHaveTextContent('마법사주방');
-      expect(container).toHaveTextContent('서울시');
-    });
+      it('renders name and address', () => {
+        const { container } = renderRestaurantContainer();
 
-    it('listens change events', () => {
-      const { queryByLabelText, getByLabelText } = renderRestaurantContainer();
+        expect(container).toHaveTextContent('마법사주방');
+        expect(container).toHaveTextContent('서울시');
+      });
 
-      expect(queryByLabelText('평점')).not.toBeNull();
-      expect(queryByLabelText('리뷰 내용')).not.toBeNull();
+      it('listens change events', () => {
+        const { queryByLabelText, getByLabelText } = renderRestaurantContainer();
 
-      const controls = [
-        { label: '평점', name: 'score', value: '5' },
-        { label: '리뷰 내용', name: 'description', value: '맛있어요' },
-      ];
+        expect(queryByLabelText('평점')).not.toBeNull();
+        expect(queryByLabelText('리뷰 내용')).not.toBeNull();
 
-      controls.forEach(({ label, name, value }) => {
-        fireEvent.change(getByLabelText(label), { target: { value } });
+        const controls = [
+          { label: '평점', name: 'score', value: '5' },
+          { label: '리뷰 내용', name: 'description', value: '맛있어요' },
+        ];
 
-        expect(dispatch).toBeCalledWith({
-          type: 'updateReviewField',
-          payload: { name, value },
+        controls.forEach(({ label, name, value }) => {
+          fireEvent.change(getByLabelText(label), { target: { value } });
+
+          expect(dispatch).toBeCalledWith({
+            type: 'updateReviewField',
+            payload: { name, value },
+          });
         });
+      });
+
+      it('renders "Send" button and listens event ', () => {
+        const { getByText } = renderRestaurantContainer();
+
+        fireEvent.click(getByText('Send'));
+
+        // - 최초 RestaurantContainer 렌더링 시 useEffect 로 dispatch 가 한 번 실행된다.
+        // - 따라서 "Send" 를 누르면 dispatch 가 총 2번 호출되는 것과 같다.
+        expect(dispatch).toBeCalledTimes(2);
       });
     });
 
-    it('renders "Send" button and listens event ', () => {
-      const { getByText } = renderRestaurantContainer();
+    context('without restaurant', () => {
+      given('restaurant', () => null);
 
-      fireEvent.click(getByText('Send'));
+      it('renders loading', () => {
+        const { container } = renderRestaurantContainer();
 
-      // - 최초 RestaurantContainer 렌더링 시 useEffect 로 dispatch 가 한 번 실행된다.
-      // - 따라서 "Send" 를 누르면 dispatch 가 총 2번 호출되는 것과 같다.
-      expect(dispatch).toBeCalledTimes(2);
+        expect(container).toHaveTextContent('Loading');
+      });
     });
   });
 
-  context('without restaurant', () => {
-    given('restaurant', () => null);
+  context('without logged-in', () => {
+    it('renders no review write field', () => {
+      const { queryByLabelText } = renderRestaurantContainer();
 
-    it('renders loading', () => {
-      const { container } = renderRestaurantContainer();
-
-      expect(container).toHaveTextContent('Loading');
+      expect(queryByLabelText('평점')).toBeNull();
+      expect(queryByLabelText('리뷰 내용')).toBeNull();
     });
   });
 });
